@@ -130,9 +130,48 @@ arr[index++][1]=l.get(i+1);
     	}
     	return arr;
     }
+    public static int findK(int[] nums) {
+        int low=0,high=nums.length-1;
+        while(low <= high) {
+        	int mid=(low+high)/2;
+        	if(nums[mid]<nums[mid-1]) return mid;
+        	if(nums[low]>nums[mid]) high=mid-1;
+        	else if(nums[high]<nums[mid]) low=mid+1;
+        	else return low;
+        }
+        return 0;
+    	
+    }
+    public static int search(int[] nums, int target) {
+    	int low=0,high=nums.length-1,k=findK(nums);
+    	System.out.println(k);
+    	while(low<=high) {
+    		int mid=(low+high)/2;
+    		if(nums[mid]==target) return (mid+k)%nums.length;
+    		else if(nums[(mid+k)%nums.length]>target) high=mid-1;
+    		else low=mid+1;
+    	}
+    	
+    	return -1;
+        
+        
+    }
+    public boolean searchMatrix(int[][] matrix, int target) {
+    	if(matrix.length==0) return false;
+     int i=0; 
+     int j=matrix[0].length-1;
+     System.out.println(i+"  "+j);
+     while(i<matrix.length && j>=0) {
+    	 if(matrix[i][j]==target ) return true;
+    	 else if(matrix[i][j]>target ) 
+    		 j--;
+    	 else
+    		 i++;
+     }
+     return false;
+    }
 	public static void main(String[] args) {
-			int[][] interval= {{1,4},{0,0}};
-			merge(interval);
+			System.out.println(findK(new int[] {4,5,6,7,0,1,2}));
 	}
 
 }
